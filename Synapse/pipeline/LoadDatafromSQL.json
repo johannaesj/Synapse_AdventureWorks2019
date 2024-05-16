@@ -911,8 +911,8 @@
 								},
 								"sink": {
 									"name": "AccountNumber",
-									"type": "Int32",
-									"physicalType": "int"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{

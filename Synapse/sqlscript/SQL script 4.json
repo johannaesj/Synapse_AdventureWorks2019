@@ -2,7 +2,7 @@
 	"name": "SQL script 4",
 	"properties": {
 		"content": {
-			"query": "ALTER TABLE [dbo].[SalesOrderHeader]\nALTER COLUMN  [PurchaseOrderNumber] [nvarchar](255)\n",
+			"query": "ALTER TABLE [dbo].[SalesOrderHeader]\nALTER COLUMN  [AccountNumber] [nvarchar](255)\n",
 			"metadata": {
 				"language": "sql"
 			},
