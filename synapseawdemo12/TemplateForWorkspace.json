@@ -746,52 +746,194 @@
 								"mappings": [
 									{
 										"source": {
-											"name": "CustomerID",
-											"type": "Int32"
+											"name": "ProductID",
+											"type": "Int32",
+											"physicalType": "int"
 										},
 										"sink": {
-											"name": "CustomerID",
-											"type": "Int32"
+											"name": "ProductID",
+											"type": "Int32",
+											"physicalType": "int"
 										}
 									},
 									{
 										"source": {
-											"name": "AddressID",
-											"type": "Int32"
+											"name": "Name",
+											"type": "String",
+											"physicalType": "nvarchar"
 										},
 										"sink": {
-											"name": "AddressID",
-											"type": "Int32"
+											"name": "Name",
+											"type": "String",
+											"physicalType": "nvarchar"
 										}
 									},
 									{
 										"source": {
-											"name": "AddressType",
-											"type": "String"
+											"name": "ProductNumber",
+											"type": "String",
+											"physicalType": "nvarchar"
 										},
 										"sink": {
-											"name": "AddressType",
-											"type": "String"
+											"name": "ProductNumber",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Color",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Color",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "StandardCost",
+											"type": "Decimal",
+											"physicalType": "money",
+											"scale": 4,
+											"precision": 19
+										},
+										"sink": {
+											"name": "StandardCost",
+											"type": "Decimal",
+											"physicalType": "money",
+											"scale": 4,
+											"precision": 19
+										}
+									},
+									{
+										"source": {
+											"name": "ListPrice",
+											"type": "Decimal",
+											"physicalType": "money",
+											"scale": 4,
+											"precision": 19
+										},
+										"sink": {
+											"name": "ListPrice",
+											"type": "Decimal",
+											"physicalType": "money",
+											"scale": 4,
+											"precision": 19
+										}
+									},
+									{
+										"source": {
+											"name": "Size",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Size",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Weight",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 2,
+											"precision": 8
+										},
+										"sink": {
+											"name": "Weight",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 2,
+											"precision": 8
+										}
+									},
+									{
+										"source": {
+											"name": "ProductCategoryID",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "ProductCategoryID",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "ProductModelID",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "ProductModelID",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "SellStartDate",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "SellStartDate",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "SellEndDate",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "SellEndDate",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "DiscontinuedDate",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "DiscontinuedDate",
+											"type": "DateTime",
+											"physicalType": "datetime"
 										}
 									},
 									{
 										"source": {
 											"name": "rowguid",
-											"type": "Guid"
+											"type": "Guid",
+											"physicalType": "uniqueidentifier"
 										},
 										"sink": {
 											"name": "rowguid",
-											"type": "Guid"
+											"type": "Guid",
+											"physicalType": "uniqueidentifier"
 										}
 									},
 									{
 										"source": {
 											"name": "ModifiedDate",
-											"type": "DateTime"
+											"type": "DateTime",
+											"physicalType": "datetime"
 										},
 										"sink": {
 											"name": "ModifiedDate",
-											"type": "DateTime"
+											"type": "DateTime",
+											"physicalType": "datetime"
 										}
 									}
 								],
@@ -3427,6 +3569,26 @@
 			"properties": {
 				"content": {
 					"query": "CREATE TABLE [dbo].[Table]\n(\n    col1 int NOT NULL\n)\nWITH\n(\n    DISTRIBUTION = HASH (col1),\n    CLUSTERED COLUMNSTORE INDEX\n)\nGO\n",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "Synapse",
+						"poolName": "Synapse"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 4')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "ALTER TABLE [dbo].[SalesOrderHeader]\nALTER COLUMN  [PurchaseOrderNumber] [nvarchar](255)\n",
 					"metadata": {
 						"language": "sql"
 					},
