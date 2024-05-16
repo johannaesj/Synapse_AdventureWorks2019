@@ -1,0 +1,36 @@
+{
+	"name": "SqlPoolTableProductDescription",
+	"properties": {
+		"annotations": [],
+		"type": "SqlPoolTable",
+		"schema": [
+			{
+				"name": "ProductDescriptionID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Description",
+				"type": "nvarchar"
+			},
+			{
+				"name": "rowguid",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "ModifiedDate",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "ProductDescription"
+		},
+		"sqlPool": {
+			"referenceName": "Synapse",
+			"type": "SqlPoolReference"
+		}
+	}
+}
