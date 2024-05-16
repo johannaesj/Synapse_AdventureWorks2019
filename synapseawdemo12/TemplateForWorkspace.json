@@ -423,7 +423,7 @@
 					},
 					{
 						"name": "Copy Customer",
-						"description": "truncate table dbo.Customer",
+						"description": "",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -442,6 +442,7 @@
 							},
 							"sink": {
 								"type": "SqlPoolSink",
+								"preCopyScript": "truncate table dbo.Customer",
 								"writeBehavior": "Insert"
 							},
 							"enableStaging": false,
@@ -623,7 +624,7 @@
 					},
 					{
 						"name": "Copy CustomerAddress",
-						"description": "truncate table dbo.CustomerAddress",
+						"description": "",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -642,6 +643,7 @@
 							},
 							"sink": {
 								"type": "SqlPoolSink",
+								"preCopyScript": "truncate table dbo.CustomerAddress",
 								"writeBehavior": "Insert"
 							},
 							"enableStaging": false,
@@ -723,7 +725,7 @@
 					},
 					{
 						"name": "Copy Product",
-						"description": "truncate table dbo.Product",
+						"description": "",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -742,6 +744,7 @@
 							},
 							"sink": {
 								"type": "SqlPoolSink",
+								"preCopyScript": "truncate table dbo.Product",
 								"writeBehavior": "Insert"
 							},
 							"enableStaging": false,
@@ -965,7 +968,7 @@
 					},
 					{
 						"name": "Copy ProductCategory",
-						"description": "truncate table dbo.ProductCategory",
+						"description": "",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -984,6 +987,7 @@
 							},
 							"sink": {
 								"type": "SqlPoolSink",
+								"preCopyScript": "truncate table dbo.ProductCategory",
 								"writeBehavior": "Insert"
 							},
 							"enableStaging": false,
@@ -1065,7 +1069,7 @@
 					},
 					{
 						"name": "SalesOrderHeader",
-						"description": "truncate table dbo.SalesOrderHeader",
+						"description": "",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -1084,6 +1088,7 @@
 							},
 							"sink": {
 								"type": "SqlPoolSink",
+								"preCopyScript": "truncate table dbo.SalesOrderHeader",
 								"writeBehavior": "Insert"
 							},
 							"enableStaging": false,
@@ -1395,7 +1400,7 @@
 					},
 					{
 						"name": "ProductModelProductDescription",
-						"description": "truncate table dbo.ProductModelProductDescription",
+						"description": "",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -1414,6 +1419,7 @@
 							},
 							"sink": {
 								"type": "SqlPoolSink",
+								"preCopyScript": "truncate table dbo.ProductModelProductDescription",
 								"writeBehavior": "Insert"
 							},
 							"enableStaging": false,
@@ -1495,7 +1501,7 @@
 					},
 					{
 						"name": "Copy ProductModel",
-						"description": "truncate table dbo.ProductModel",
+						"description": "",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -1514,6 +1520,7 @@
 							},
 							"sink": {
 								"type": "SqlPoolSink",
+								"preCopyScript": "truncate table dbo.ProductModel",
 								"writeBehavior": "Insert"
 							},
 							"enableStaging": false,
@@ -1585,7 +1592,7 @@
 					},
 					{
 						"name": "Copy ProductDescription",
-						"description": "truncate table dbo.ProductDescription",
+						"description": "",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -1604,6 +1611,7 @@
 							},
 							"sink": {
 								"type": "SqlPoolSink",
+								"preCopyScript": "truncate table dbo.ProductDescription",
 								"writeBehavior": "Insert"
 							},
 							"enableStaging": false,
@@ -1675,7 +1683,7 @@
 					},
 					{
 						"name": "Copy SalesOrderDetail_copy1",
-						"description": "truncate table dbo.SalesOrderDetail",
+						"description": "",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -1694,6 +1702,7 @@
 							},
 							"sink": {
 								"type": "SqlPoolSink",
+								"preCopyScript": "truncate table dbo.SalesOrderDetail",
 								"writeBehavior": "Insert"
 							},
 							"enableStaging": false,
