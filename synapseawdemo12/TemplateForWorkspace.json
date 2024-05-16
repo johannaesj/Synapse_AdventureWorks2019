@@ -1087,221 +1087,281 @@
 									{
 										"source": {
 											"name": "SalesOrderID",
-											"type": "Int32"
+											"type": "Int32",
+											"physicalType": "int"
 										},
 										"sink": {
 											"name": "SalesOrderID",
-											"type": "Int32"
+											"type": "Int32",
+											"physicalType": "int"
 										}
 									},
 									{
 										"source": {
 											"name": "RevisionNumber",
-											"type": "Byte"
+											"type": "Byte",
+											"physicalType": "tinyint"
 										},
 										"sink": {
 											"name": "RevisionNumber",
-											"type": "Byte"
+											"type": "Byte",
+											"physicalType": "tinyint"
 										}
 									},
 									{
 										"source": {
 											"name": "OrderDate",
-											"type": "DateTime"
+											"type": "DateTime",
+											"physicalType": "datetime"
 										},
 										"sink": {
 											"name": "OrderDate",
-											"type": "DateTime"
+											"type": "DateTime",
+											"physicalType": "datetime"
 										}
 									},
 									{
 										"source": {
 											"name": "DueDate",
-											"type": "DateTime"
+											"type": "DateTime",
+											"physicalType": "datetime"
 										},
 										"sink": {
 											"name": "DueDate",
-											"type": "DateTime"
+											"type": "DateTime",
+											"physicalType": "datetime"
 										}
 									},
 									{
 										"source": {
 											"name": "ShipDate",
-											"type": "DateTime"
+											"type": "DateTime",
+											"physicalType": "datetime"
 										},
 										"sink": {
 											"name": "ShipDate",
-											"type": "DateTime"
+											"type": "DateTime",
+											"physicalType": "datetime"
 										}
 									},
 									{
 										"source": {
 											"name": "Status",
-											"type": "Byte"
+											"type": "Byte",
+											"physicalType": "tinyint"
 										},
 										"sink": {
 											"name": "Status",
-											"type": "Byte"
+											"type": "Byte",
+											"physicalType": "tinyint"
 										}
 									},
 									{
 										"source": {
 											"name": "OnlineOrderFlag",
-											"type": "Boolean"
+											"type": "Boolean",
+											"physicalType": "bit"
 										},
 										"sink": {
 											"name": "OnlineOrderFlag",
-											"type": "String"
+											"type": "String",
+											"physicalType": "nvarchar"
 										}
 									},
 									{
 										"source": {
 											"name": "SalesOrderNumber",
-											"type": "String"
+											"type": "String",
+											"physicalType": "nvarchar"
 										},
 										"sink": {
 											"name": "SalesOrderNumber",
-											"type": "String"
+											"type": "String",
+											"physicalType": "nvarchar"
 										}
 									},
 									{
 										"source": {
 											"name": "PurchaseOrderNumber",
-											"type": "String"
+											"type": "String",
+											"physicalType": "nvarchar"
 										},
 										"sink": {
 											"name": "PurchaseOrderNumber",
-											"type": "Int32"
+											"type": "String",
+											"physicalType": "nvarchar"
 										}
 									},
 									{
 										"source": {
 											"name": "AccountNumber",
-											"type": "String"
+											"type": "String",
+											"physicalType": "nvarchar"
 										},
 										"sink": {
 											"name": "AccountNumber",
-											"type": "Int32"
+											"type": "Int32",
+											"physicalType": "int"
 										}
 									},
 									{
 										"source": {
 											"name": "CustomerID",
-											"type": "Int32"
+											"type": "Int32",
+											"physicalType": "int"
 										},
 										"sink": {
 											"name": "CustomerID",
-											"type": "Int32"
+											"type": "Int32",
+											"physicalType": "int"
 										}
 									},
 									{
 										"source": {
 											"name": "ShipToAddressID",
-											"type": "Int32"
+											"type": "Int32",
+											"physicalType": "int"
 										},
 										"sink": {
 											"name": "ShipToAddressID",
-											"type": "Int32"
+											"type": "Int32",
+											"physicalType": "int"
 										}
 									},
 									{
 										"source": {
 											"name": "BillToAddressID",
-											"type": "Int32"
+											"type": "Int32",
+											"physicalType": "int"
 										},
 										"sink": {
 											"name": "BillToAddressID",
-											"type": "Int32"
+											"type": "Int32",
+											"physicalType": "int"
 										}
 									},
 									{
 										"source": {
 											"name": "ShipMethod",
-											"type": "String"
+											"type": "String",
+											"physicalType": "nvarchar"
 										},
 										"sink": {
 											"name": "ShipMethod",
-											"type": "String"
+											"type": "String",
+											"physicalType": "nvarchar"
 										}
 									},
 									{
 										"source": {
 											"name": "CreditCardApprovalCode",
-											"type": "String"
+											"type": "String",
+											"physicalType": "varchar"
 										},
 										"sink": {
 											"name": "CreditCardApprovalCode",
-											"type": "String"
+											"type": "String",
+											"physicalType": "varchar"
 										}
 									},
 									{
 										"source": {
 											"name": "SubTotal",
-											"type": "Decimal"
+											"type": "Decimal",
+											"physicalType": "money",
+											"scale": 4,
+											"precision": 19
 										},
 										"sink": {
 											"name": "SubTotal",
-											"type": "Decimal"
+											"type": "Decimal",
+											"physicalType": "money",
+											"scale": 4,
+											"precision": 19
 										}
 									},
 									{
 										"source": {
 											"name": "TaxAmt",
-											"type": "Decimal"
+											"type": "Decimal",
+											"physicalType": "money",
+											"scale": 4,
+											"precision": 19
 										},
 										"sink": {
 											"name": "TaxAmt",
-											"type": "Decimal"
+											"type": "Decimal",
+											"physicalType": "money",
+											"scale": 4,
+											"precision": 19
 										}
 									},
 									{
 										"source": {
 											"name": "Freight",
-											"type": "Decimal"
+											"type": "Decimal",
+											"physicalType": "money",
+											"scale": 4,
+											"precision": 19
 										},
 										"sink": {
 											"name": "Freight",
-											"type": "Decimal"
+											"type": "Decimal",
+											"physicalType": "money",
+											"scale": 4,
+											"precision": 19
 										}
 									},
 									{
 										"source": {
 											"name": "TotalDue",
-											"type": "Decimal"
+											"type": "Decimal",
+											"physicalType": "money",
+											"scale": 4,
+											"precision": 19
 										},
 										"sink": {
 											"name": "TotalDue",
-											"type": "Decimal"
+											"type": "Decimal",
+											"physicalType": "money",
+											"scale": 4,
+											"precision": 19
 										}
 									},
 									{
 										"source": {
 											"name": "Comment",
-											"type": "String"
+											"type": "String",
+											"physicalType": "nvarchar"
 										},
 										"sink": {
 											"name": "Comment",
-											"type": "String"
+											"type": "String",
+											"physicalType": "nvarchar"
 										}
 									},
 									{
 										"source": {
 											"name": "rowguid",
-											"type": "Guid"
+											"type": "Guid",
+											"physicalType": "uniqueidentifier"
 										},
 										"sink": {
 											"name": "rowguid",
-											"type": "Guid"
+											"type": "Guid",
+											"physicalType": "uniqueidentifier"
 										}
 									},
 									{
 										"source": {
 											"name": "ModifiedDate",
-											"type": "DateTime"
+											"type": "DateTime",
+											"physicalType": "datetime"
 										},
 										"sink": {
 											"name": "ModifiedDate",
-											"type": "DateTime"
+											"type": "DateTime",
+											"physicalType": "datetime"
 										}
 									}
 								],
