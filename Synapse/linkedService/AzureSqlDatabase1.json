@@ -4,7 +4,7 @@
 		"annotations": [],
 		"type": "AzureSqlDatabase",
 		"typeProperties": {
-			"connectionString": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=synapse-adventureworks2019-demo-sqlserver.database.windows.net;Initial Catalog=AdventureWorks2019"
+			"connectionString": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=demosqlserversynapseaw.database.windows.net;Initial Catalog=AdventureWorks20192"
 		},
 		"connectVia": {
 			"referenceName": "AutoResolveIntegrationRuntime",
