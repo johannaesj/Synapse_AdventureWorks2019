@@ -9,7 +9,7 @@
 			"table": "PersonTypeByEmailPromotion"
 		},
 		"sqlPool": {
-			"referenceName": "aw2019_demo_synapse_sql_pool",
+			"referenceName": "Synapse",
 			"type": "SqlPoolReference"
 		}
 	}
