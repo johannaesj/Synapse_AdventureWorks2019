@@ -22,6 +22,7 @@
 					},
 					"sink": {
 						"type": "SqlPoolSink",
+						"preCopyScript": "truncate table dbo.Address",
 						"writeBehavior": "Insert"
 					},
 					"enableStaging": false,
