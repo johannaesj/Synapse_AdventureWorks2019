@@ -423,6 +423,7 @@
 					},
 					{
 						"name": "Copy Customer",
+						"description": "truncate table dbo.Customer",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -622,6 +623,7 @@
 					},
 					{
 						"name": "Copy CustomerAddress",
+						"description": "truncate table dbo.CustomerAddress",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -721,6 +723,7 @@
 					},
 					{
 						"name": "Copy Product",
+						"description": "truncate table dbo.Product",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -962,6 +965,7 @@
 					},
 					{
 						"name": "Copy ProductCategory",
+						"description": "truncate table dbo.ProductCategory",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -1060,7 +1064,8 @@
 						]
 					},
 					{
-						"name": "Copy SalesOrderHeader",
+						"name": "SalesOrderHeader",
+						"description": "truncate table dbo.SalesOrderHeader",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -1389,7 +1394,8 @@
 						]
 					},
 					{
-						"name": "Copy Product_ModelProductDescription",
+						"name": "ProductModelProductDescription",
+						"description": "truncate table dbo.ProductModelProductDescription",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -1489,6 +1495,7 @@
 					},
 					{
 						"name": "Copy ProductModel",
+						"description": "truncate table dbo.ProductModel",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -1578,6 +1585,7 @@
 					},
 					{
 						"name": "Copy ProductDescription",
+						"description": "truncate table dbo.ProductDescription",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -1667,6 +1675,7 @@
 					},
 					{
 						"name": "Copy SalesOrderDetail_copy1",
+						"description": "truncate table dbo.SalesOrderDetail",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
