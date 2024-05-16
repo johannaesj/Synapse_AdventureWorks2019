@@ -1200,8 +1200,8 @@
 										},
 										"sink": {
 											"name": "AccountNumber",
-											"type": "Int32",
-											"physicalType": "int"
+											"type": "String",
+											"physicalType": "nvarchar"
 										}
 									},
 									{
@@ -3648,7 +3648,7 @@
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
 				"content": {
-					"query": "ALTER TABLE [dbo].[SalesOrderHeader]\nALTER COLUMN  [PurchaseOrderNumber] [nvarchar](255)\n",
+					"query": "ALTER TABLE [dbo].[SalesOrderHeader]\nALTER COLUMN  [AccountNumber] [nvarchar](255)\n",
 					"metadata": {
 						"language": "sql"
 					},
