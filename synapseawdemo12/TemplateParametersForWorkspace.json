@@ -1,0 +1,24 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"workspaceName": {
+			"value": "synapseawdemo12"
+		},
+		"AzureSqlDatabase1_connectionString": {
+			"value": ""
+		},
+		"synapse-instance-adventureworks2019-demo-WorkspaceDefaultSqlServer_connectionString": {
+			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=tcp:synapse-instance-adventureworks2019-demo.sql.azuresynapse.net,1433;Initial Catalog=@{linkedService().DBName}"
+		},
+		"synapseawdemo12-WorkspaceDefaultSqlServer_connectionString": {
+			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=tcp:synapseawdemo12.sql.azuresynapse.net,1433;Initial Catalog=@{linkedService().DBName}"
+		},
+		"synapse-instance-adventureworks2019-demo-WorkspaceDefaultStorage_properties_typeProperties_url": {
+			"value": "https://datalakeadworks2019demo.dfs.core.windows.net"
+		},
+		"synapseawdemo12-WorkspaceDefaultStorage_properties_typeProperties_url": {
+			"value": "https://datalakeadworksdemo.dfs.core.windows.net"
+		}
+	}
+}
