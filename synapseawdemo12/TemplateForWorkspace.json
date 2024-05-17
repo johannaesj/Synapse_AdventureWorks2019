@@ -3702,6 +3702,86 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 6')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "SET ANSI_NULLS ON\nGO\nSET QUOTED_IDENTIFIER ON\nGO\n\nCREATE TABLE [dbo].[Product]\n( \n\t[ProductID] [int]  NOT NULL,\n\t[Name] [nvarchar](125)  NOT NULL,\n\t[ProductNumber] [nvarchar](25)  NOT NULL,\n\t[Color] [nvarchar](15)  NULL,\n\t[StandardCost] [money]  NOT NULL,\n\t[ListPrice] [money]  NOT NULL,\n\t[Size] [nvarchar](5)  NULL,\n\t[Weight] [decimal](8,2)  NULL,\n\t[ProductCategoryID] [int]  NULL,\n\t[ProductModelID] [int]  NULL,\n\t[SellStartDate] [datetime]  NOT NULL,\n\t[SellEndDate] [datetime]  NULL,\n\t[DiscontinuedDate] [datetime]  NULL,\n\t[rowguid] [uniqueidentifier]  NOT NULL,\n\t[ModifiedDate] [datetime]  NOT NULL\n)\nWITH\n(\n\tDISTRIBUTION = REPLICATE,\n\tCLUSTERED COLUMNSTORE INDEX\n)\nGO",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "Synapse",
+						"poolName": "Synapse"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 7')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "CREATE VIEW [dbo].[ViewProduct] AS SELECT \n\t[ProductID]\n\t[Name],\n\t[ProductNumber] ,\n\t[Color] ,\n\t[StandardCost] ,\n\t[ListPrice],\n\t[Size] ,\n\t[Weight],\n\t[ProductCategoryID],\n\t[ProductModelID],\n\t[SellStartDate] ,\n\t[SellEndDate],\n\t[DiscontinuedDate],\n\t[ModifiedDate] \n\t FROM [dbo].[Product]\n",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "Synapse",
+						"poolName": "Synapse"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 8')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "CREATE VIEW [dbo].[View]\n\tAS SELECT * FROM [SomeTableOrView]\n",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "Synapse",
+						"poolName": "Synapse"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 9')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "SELECT TOP (100) [ProductID]\n,[Name]\n,[ProductNumber]\n,[Color]\n,[StandardCost]\n,[ListPrice]\n,[Size]\n,[Weight]\n,[ProductCategoryID]\n,[ProductModelID]\n,[SellStartDate]\n,[SellEndDate]\n,[DiscontinuedDate]\n,[ModifiedDate]\n FROM [dbo].[ViewProduct]",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "Synapse",
+						"poolName": "Synapse"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('workspaceName'), '/DeltaLake_Person')]",
 			"type": "Microsoft.Synapse/workspaces/notebooks",
 			"apiVersion": "2019-06-01-preview",
