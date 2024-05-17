@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 6",
+	"properties": {
+		"content": {
+			"query": "SET ANSI_NULLS ON\nGO\nSET QUOTED_IDENTIFIER ON\nGO\n\nCREATE TABLE [dbo].[Product]\n( \n\t[ProductID] [int]  NOT NULL,\n\t[Name] [nvarchar](125)  NOT NULL,\n\t[ProductNumber] [nvarchar](25)  NOT NULL,\n\t[Color] [nvarchar](15)  NULL,\n\t[StandardCost] [money]  NOT NULL,\n\t[ListPrice] [money]  NOT NULL,\n\t[Size] [nvarchar](5)  NULL,\n\t[Weight] [decimal](8,2)  NULL,\n\t[ProductCategoryID] [int]  NULL,\n\t[ProductModelID] [int]  NULL,\n\t[SellStartDate] [datetime]  NOT NULL,\n\t[SellEndDate] [datetime]  NULL,\n\t[DiscontinuedDate] [datetime]  NULL,\n\t[rowguid] [uniqueidentifier]  NOT NULL,\n\t[ModifiedDate] [datetime]  NOT NULL\n)\nWITH\n(\n\tDISTRIBUTION = REPLICATE,\n\tCLUSTERED COLUMNSTORE INDEX\n)\nGO",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "Synapse",
+				"poolName": "Synapse"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

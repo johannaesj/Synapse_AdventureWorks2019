@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 9",
+	"properties": {
+		"content": {
+			"query": "SELECT TOP (100) [ProductID]\n,[Name]\n,[ProductNumber]\n,[Color]\n,[StandardCost]\n,[ListPrice]\n,[Size]\n,[Weight]\n,[ProductCategoryID]\n,[ProductModelID]\n,[SellStartDate]\n,[SellEndDate]\n,[DiscontinuedDate]\n,[ModifiedDate]\n FROM [dbo].[ViewProduct]",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "Synapse",
+				"poolName": "Synapse"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
