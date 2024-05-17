@@ -21,10 +21,6 @@
 			"metadata": "Secure string for 'connectionString' of 'synapseawdemo12-WorkspaceDefaultSqlServer'",
 			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=tcp:synapseawdemo12.sql.azuresynapse.net,1433;Initial Catalog=@{linkedService().DBName}"
 		},
-		"synapse-instance-adventureworks2019-demo-WorkspaceDefaultStorage_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://datalakeadworks2019demo.dfs.core.windows.net"
-		},
 		"synapseawdemo12-WorkspaceDefaultStorage_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://datalakeadworksdemo.dfs.core.windows.net"
@@ -35,131 +31,22 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('workspaceName'), '/CopyGoldToDW')]",
-			"type": "Microsoft.Synapse/workspaces/pipelines",
+			"name": "[concat(parameters('workspaceName'), '/SparkPool')]",
+			"type": "Microsoft.Synapse/workspaces/bigDataPools",
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
-				"description": "Copy models from Data Lake to dedicated SQL pool.",
-				"activities": [
-					{
-						"name": "Copy person",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "ParquetSource",
-								"storeSettings": {
-									"type": "AzureBlobFSReadSettings",
-									"recursive": true,
-									"wildcardFileName": "*",
-									"enablePartitionDiscovery": false
-								}
-							},
-							"sink": {
-								"type": "SqlPoolSink",
-								"allowCopyCommand": true,
-								"copyCommandSettings": {},
-								"tableOption": "autoCreate"
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "SourceDataset_person",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DestinationSqlPool_person",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
-						"name": "Copy product",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "Copy person",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "ParquetSource",
-								"storeSettings": {
-									"type": "AzureBlobFSReadSettings",
-									"recursive": true,
-									"wildcardFileName": "*",
-									"enablePartitionDiscovery": false
-								}
-							},
-							"sink": {
-								"type": "SqlPoolSink",
-								"allowCopyCommand": true,
-								"copyCommandSettings": {},
-								"tableOption": "autoCreate"
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "SourceDataset_product",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DestinationSqlPool_product",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
 				"annotations": []
 			},
-			"dependsOn": [
-				"[concat(variables('workspaceId'), '/datasets/SourceDataset_person')]",
-				"[concat(variables('workspaceId'), '/datasets/DestinationSqlPool_person')]",
-				"[concat(variables('workspaceId'), '/datasets/SourceDataset_product')]",
-				"[concat(variables('workspaceId'), '/datasets/DestinationSqlPool_product')]"
-			]
+			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('workspaceName'), '/Copy_SQLDB_DL')]",
+			"name": "[concat(parameters('workspaceName'), '/Copy_SQLDB_TO_DL')]",
 			"type": "Microsoft.Synapse/workspaces/pipelines",
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
-				"description": "Copy from SQL Database to Data Lake",
 				"activities": [
 					{
-						"name": "ForEach_b2x",
+						"name": "ForEach_yfg",
 						"type": "ForEach",
 						"dependsOn": [],
 						"userProperties": [],
@@ -170,11 +57,11 @@
 							},
 							"activities": [
 								{
-									"name": "Copy_b2x",
+									"name": "Copy_yfg",
 									"type": "Copy",
 									"dependsOn": [],
 									"policy": {
-										"timeout": "7.00:00:00",
+										"timeout": "0.12:00:00",
 										"retry": 0,
 										"retryIntervalInSeconds": 30,
 										"secureOutput": false,
@@ -183,7 +70,7 @@
 									"userProperties": [
 										{
 											"name": "Source",
-											"value": "@{item().source.schema}.@{item().source.table}"
+											"value": "SalesLT.@{item().source.table}"
 										},
 										{
 											"name": "Destination",
@@ -205,21 +92,28 @@
 											}
 										},
 										"enableStaging": false,
-										"validateDataConsistency": false
+										"validateDataConsistency": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
 									},
 									"inputs": [
 										{
-											"referenceName": "SourceDataset_b2x",
+											"referenceName": "SourceDataset_yfg",
 											"type": "DatasetReference",
 											"parameters": {
-												"cw_schema": "@item().source.schema",
 												"cw_table": "@item().source.table"
 											}
 										}
 									],
 									"outputs": [
 										{
-											"referenceName": "DestinationDataset_b2x",
+											"referenceName": "DestinationDataset_yfg",
 											"type": "DatasetReference",
 											"parameters": {
 												"cw_fileName": "@item().destination.fileName"
@@ -240,29 +134,82 @@
 						"defaultValue": [
 							{
 								"source": {
-									"schema": "Person",
-									"table": "EmailAddress"
+									"table": "Address"
 								},
 								"destination": {
-									"fileName": "PersonEmailAddress.parquet"
+									"fileName": "SalesLTAddress.parquet"
 								}
 							},
 							{
 								"source": {
-									"schema": "Person",
-									"table": "Person"
+									"table": "Customer"
 								},
 								"destination": {
-									"fileName": "PersonPerson.parquet"
+									"fileName": "SalesLTCustomer.parquet"
 								}
 							},
 							{
 								"source": {
-									"schema": "Production",
+									"table": "CustomerAddress"
+								},
+								"destination": {
+									"fileName": "SalesLTCustomerAddress.parquet"
+								}
+							},
+							{
+								"source": {
 									"table": "Product"
 								},
 								"destination": {
-									"fileName": "ProductionProduct.parquet"
+									"fileName": "SalesLTProduct.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "ProductCategory"
+								},
+								"destination": {
+									"fileName": "SalesLTProductCategory.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "ProductDescription"
+								},
+								"destination": {
+									"fileName": "SalesLTProductDescription.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "ProductModel"
+								},
+								"destination": {
+									"fileName": "SalesLTProductModel.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "ProductModelProductDescription"
+								},
+								"destination": {
+									"fileName": "SalesLTProductModelProductDescription.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "SalesOrderDetail"
+								},
+								"destination": {
+									"fileName": "SalesLTSalesOrderDetail.parquet"
+								}
+							},
+							{
+								"source": {
+									"table": "SalesOrderHeader"
+								},
+								"destination": {
+									"fileName": "SalesLTSalesOrderHeader.parquet"
 								}
 							}
 						]
@@ -271,8 +218,8 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('workspaceId'), '/datasets/SourceDataset_b2x')]",
-				"[concat(variables('workspaceId'), '/datasets/DestinationDataset_b2x')]"
+				"[concat(variables('workspaceId'), '/datasets/SourceDataset_yfg')]",
+				"[concat(variables('workspaceId'), '/datasets/DestinationDataset_yfg')]"
 			]
 		},
 		{
@@ -2531,12 +2478,12 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('workspaceName'), '/DestinationDataset_0nb')]",
+			"name": "[concat(parameters('workspaceName'), '/DestinationDataset_yfg')]",
 			"type": "Microsoft.Synapse/workspaces/datasets",
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "synapse-instance-adventureworks2019-demo-WorkspaceDefaultStorage",
+					"referenceName": "synapseawdemo12-WorkspaceDefaultStorage",
 					"type": "LinkedServiceReference"
 				},
 				"parameters": {
@@ -2560,40 +2507,7 @@
 				"schema": []
 			},
 			"dependsOn": [
-				"[concat(variables('workspaceId'), '/linkedServices/synapse-instance-adventureworks2019-demo-WorkspaceDefaultStorage')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/DestinationDataset_b2x')]",
-			"type": "Microsoft.Synapse/workspaces/datasets",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "synapse-instance-adventureworks2019-demo-WorkspaceDefaultStorage",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"cw_fileName": {
-						"type": "String"
-					}
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": {
-							"value": "@dataset().cw_fileName",
-							"type": "Expression"
-						},
-						"fileSystem": "adventureworks2019"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('workspaceId'), '/linkedServices/synapse-instance-adventureworks2019-demo-WorkspaceDefaultStorage')]"
+				"[concat(variables('workspaceId'), '/linkedServices/synapseawdemo12-WorkspaceDefaultStorage')]"
 			]
 		},
 		{
@@ -2709,79 +2623,32 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('workspaceName'), '/SourceDataset_person')]",
+			"name": "[concat(parameters('workspaceName'), '/SourceDataset_yfg')]",
 			"type": "Microsoft.Synapse/workspaces/datasets",
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "synapse-instance-adventureworks2019-demo-WorkspaceDefaultStorage",
+					"referenceName": "AzureSqlDatabase1",
 					"type": "LinkedServiceReference"
 				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"folderPath": "delta/personGoldTable",
-						"fileSystem": "adventureworks2019"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": [
-					{
-						"name": "PersonType",
-						"type": "UTF8"
-					},
-					{
-						"name": "EmailPromotion",
-						"type": "INT32"
-					},
-					{
-						"name": "count",
-						"type": "INT64"
+				"parameters": {
+					"cw_table": {
+						"type": "String"
 					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('workspaceId'), '/linkedServices/synapse-instance-adventureworks2019-demo-WorkspaceDefaultStorage')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/SourceDataset_product')]",
-			"type": "Microsoft.Synapse/workspaces/datasets",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "synapse-instance-adventureworks2019-demo-WorkspaceDefaultStorage",
-					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
-				"type": "Parquet",
+				"type": "AzureSqlTable",
+				"schema": [],
 				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"folderPath": "delta/productGoldTable",
-						"fileSystem": "adventureworks2019"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": [
-					{
-						"name": "Color",
-						"type": "UTF8"
-					},
-					{
-						"name": "ProductLine",
-						"type": "UTF8"
-					},
-					{
-						"name": "count",
-						"type": "INT64"
+					"schema": "SalesLT",
+					"table": {
+						"value": "@dataset().cw_table",
+						"type": "Expression"
 					}
-				]
+				}
 			},
 			"dependsOn": [
-				"[concat(variables('workspaceId'), '/linkedServices/synapse-instance-adventureworks2019-demo-WorkspaceDefaultStorage')]"
+				"[concat(variables('workspaceId'), '/linkedServices/AzureSqlDatabase1')]"
 			]
 		},
 		{
@@ -3511,25 +3378,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('workspaceName'), '/synapse-instance-adventureworks2019-demo-WorkspaceDefaultStorage')]",
-			"type": "Microsoft.Synapse/workspaces/linkedServices",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobFS",
-				"typeProperties": {
-					"url": "[parameters('synapse-instance-adventureworks2019-demo-WorkspaceDefaultStorage_properties_typeProperties_url')]"
-				},
-				"connectVia": {
-					"referenceName": "AutoResolveIntegrationRuntime",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('workspaceName'), '/synapseawdemo12-WorkspaceDefaultSqlServer')]",
 			"type": "Microsoft.Synapse/workspaces/linkedServices",
 			"apiVersion": "2019-06-01-preview",
@@ -3598,186 +3446,6 @@
 			"properties": {
 				"type": "ManagedIdentity",
 				"typeProperties": {}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/SQL script 1')]",
-			"type": "Microsoft.Synapse/workspaces/sqlscripts",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"content": {
-					"query": "",
-					"metadata": {
-						"language": "sql"
-					},
-					"currentConnection": {
-						"databaseName": "Synapse",
-						"poolName": "Synapse"
-					},
-					"resultLimit": 5000
-				},
-				"type": "SqlQuery"
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/SQL script 2')]",
-			"type": "Microsoft.Synapse/workspaces/sqlscripts",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"content": {
-					"query": "CREATE TABLE [dbo].[SalesOrderHeader]\n(\n[SalesOrderID] [int] NOT NULL,\n\t[RevisionNumber] [tinyint] NOT NULL,\n\t[OrderDate] [datetime] NOT NULL,\n\t[DueDate] [datetime] NOT NULL,\n\t[ShipDate] [datetime] NULL,\n\t[Status] [tinyint] NOT NULL,\n\t[OnlineOrderFlag] [nvarchar](50)  NULL,\n\t[SalesOrderNumber]  [nvarchar](50) ,\n\t[PurchaseOrderNumber] [int] NULL,\n\t[AccountNumber] [int] NULL,\n\t[CustomerID] [int] NOT NULL,\n\t[ShipToAddressID] [int] NULL,\n\t[BillToAddressID] [int] NULL,\n\t[ShipMethod] [nvarchar](50) NOT NULL,\n\t[CreditCardApprovalCode] [varchar](15) NULL,\n\t[SubTotal] [money] NOT NULL,\n\t[TaxAmt] [money] NOT NULL,\n\t[Freight] [money] NOT NULL,\n\t[TotalDue]  [money] NOT NULL,\n\t[Comment] [nvarchar](255) NULL,\n\t[rowguid] [uniqueidentifier] NOT NULL,\n\t[ModifiedDate] [datetime] NOT NULL\n)\nWITH\n(\n    DISTRIBUTION = HASH (SalesOrderID),\n    CLUSTERED COLUMNSTORE INDEX\n)\nGO",
-					"metadata": {
-						"language": "sql"
-					},
-					"currentConnection": {
-						"databaseName": "Synapse",
-						"poolName": "Synapse"
-					},
-					"resultLimit": 5000
-				},
-				"type": "SqlQuery"
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/SQL script 3')]",
-			"type": "Microsoft.Synapse/workspaces/sqlscripts",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"content": {
-					"query": "CREATE TABLE [dbo].[Table]\n(\n    col1 int NOT NULL\n)\nWITH\n(\n    DISTRIBUTION = HASH (col1),\n    CLUSTERED COLUMNSTORE INDEX\n)\nGO\n",
-					"metadata": {
-						"language": "sql"
-					},
-					"currentConnection": {
-						"databaseName": "Synapse",
-						"poolName": "Synapse"
-					},
-					"resultLimit": 5000
-				},
-				"type": "SqlQuery"
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/SQL script 4')]",
-			"type": "Microsoft.Synapse/workspaces/sqlscripts",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"content": {
-					"query": "ALTER TABLE [dbo].[SalesOrderHeader]\nALTER COLUMN  [AccountNumber] [nvarchar](255)\n",
-					"metadata": {
-						"language": "sql"
-					},
-					"currentConnection": {
-						"databaseName": "Synapse",
-						"poolName": "Synapse"
-					},
-					"resultLimit": 5000
-				},
-				"type": "SqlQuery"
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/SQL script 5')]",
-			"type": "Microsoft.Synapse/workspaces/sqlscripts",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"content": {
-					"query": "SELECT TOP (100) [AddressID]\n,[AddressLine1]\n,[AddressLine2]\n,[City]\n,[StateProvince]\n,[CountryRegion]\n,[PostalCode]\n,[rowguid]\n,[ModifiedDate]\n FROM [dbo].[Address]",
-					"metadata": {
-						"language": "sql"
-					},
-					"currentConnection": {
-						"databaseName": "Synapse",
-						"poolName": "Synapse"
-					},
-					"resultLimit": 5000
-				},
-				"type": "SqlQuery"
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/SQL script 6')]",
-			"type": "Microsoft.Synapse/workspaces/sqlscripts",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"content": {
-					"query": "SET ANSI_NULLS ON\nGO\nSET QUOTED_IDENTIFIER ON\nGO\n\nCREATE TABLE [dbo].[Product]\n( \n\t[ProductID] [int]  NOT NULL,\n\t[Name] [nvarchar](125)  NOT NULL,\n\t[ProductNumber] [nvarchar](25)  NOT NULL,\n\t[Color] [nvarchar](15)  NULL,\n\t[StandardCost] [money]  NOT NULL,\n\t[ListPrice] [money]  NOT NULL,\n\t[Size] [nvarchar](5)  NULL,\n\t[Weight] [decimal](8,2)  NULL,\n\t[ProductCategoryID] [int]  NULL,\n\t[ProductModelID] [int]  NULL,\n\t[SellStartDate] [datetime]  NOT NULL,\n\t[SellEndDate] [datetime]  NULL,\n\t[DiscontinuedDate] [datetime]  NULL,\n\t[rowguid] [uniqueidentifier]  NOT NULL,\n\t[ModifiedDate] [datetime]  NOT NULL\n)\nWITH\n(\n\tDISTRIBUTION = REPLICATE,\n\tCLUSTERED COLUMNSTORE INDEX\n)\nGO",
-					"metadata": {
-						"language": "sql"
-					},
-					"currentConnection": {
-						"databaseName": "Synapse",
-						"poolName": "Synapse"
-					},
-					"resultLimit": 5000
-				},
-				"type": "SqlQuery"
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/SQL script 7')]",
-			"type": "Microsoft.Synapse/workspaces/sqlscripts",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"content": {
-					"query": "CREATE VIEW [dbo].[ViewProduct] AS SELECT \n\t[ProductID]\n\t[Name],\n\t[ProductNumber] ,\n\t[Color] ,\n\t[StandardCost] ,\n\t[ListPrice],\n\t[Size] ,\n\t[Weight],\n\t[ProductCategoryID],\n\t[ProductModelID],\n\t[SellStartDate] ,\n\t[SellEndDate],\n\t[DiscontinuedDate],\n\t[ModifiedDate] \n\t FROM [dbo].[Product]\n",
-					"metadata": {
-						"language": "sql"
-					},
-					"currentConnection": {
-						"databaseName": "Synapse",
-						"poolName": "Synapse"
-					},
-					"resultLimit": 5000
-				},
-				"type": "SqlQuery"
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/SQL script 8')]",
-			"type": "Microsoft.Synapse/workspaces/sqlscripts",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"content": {
-					"query": "CREATE VIEW [dbo].[View]\n\tAS SELECT * FROM [SomeTableOrView]\n",
-					"metadata": {
-						"language": "sql"
-					},
-					"currentConnection": {
-						"databaseName": "Synapse",
-						"poolName": "Synapse"
-					},
-					"resultLimit": 5000
-				},
-				"type": "SqlQuery"
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/SQL script 9')]",
-			"type": "Microsoft.Synapse/workspaces/sqlscripts",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"content": {
-					"query": "SELECT TOP (100) [ProductID]\n,[Name]\n,[ProductNumber]\n,[Color]\n,[StandardCost]\n,[ListPrice]\n,[Size]\n,[Weight]\n,[ProductCategoryID]\n,[ProductModelID]\n,[SellStartDate]\n,[SellEndDate]\n,[DiscontinuedDate]\n,[ModifiedDate]\n FROM [dbo].[ViewProduct]",
-					"metadata": {
-						"language": "sql"
-					},
-					"currentConnection": {
-						"databaseName": "Synapse",
-						"poolName": "Synapse"
-					},
-					"resultLimit": 5000
-				},
-				"type": "SqlQuery"
 			},
 			"dependsOn": []
 		},
@@ -4316,6 +3984,31 @@
 				]
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SparkPool')]",
+			"type": "Microsoft.Synapse/workspaces/bigDataPools",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"autoPause": {
+					"enabled": true,
+					"delayInMinutes": 15
+				},
+				"autoScale": {
+					"enabled": true,
+					"maxNodeCount": 51,
+					"minNodeCount": 6
+				},
+				"nodeCount": 10,
+				"nodeSize": "Medium",
+				"nodeSizeFamily": "MemoryOptimized",
+				"sparkVersion": "3.4",
+				"isComputeIsolationEnabled": false,
+				"sessionLevelPackagesEnabled": false,
+				"annotations": []
+			},
+			"dependsOn": [],
+			"location": "northeurope"
 		},
 		{
 			"name": "[concat(parameters('workspaceName'), '/Synapse')]",

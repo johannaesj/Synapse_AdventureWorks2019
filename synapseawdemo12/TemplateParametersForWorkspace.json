@@ -14,9 +14,6 @@
 		"synapseawdemo12-WorkspaceDefaultSqlServer_connectionString": {
 			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=tcp:synapseawdemo12.sql.azuresynapse.net,1433;Initial Catalog=@{linkedService().DBName}"
 		},
-		"synapse-instance-adventureworks2019-demo-WorkspaceDefaultStorage_properties_typeProperties_url": {
-			"value": "https://datalakeadworks2019demo.dfs.core.windows.net"
-		},
 		"synapseawdemo12-WorkspaceDefaultStorage_properties_typeProperties_url": {
 			"value": "https://datalakeadworksdemo.dfs.core.windows.net"
 		}
